@@ -33,7 +33,9 @@ public class Review implements Parcelable
         return 0;
     }
 
-    public static final Creator<Review> CREATOR = new Creator<Review>() {
+    public static final Creator<Review> CREATOR = new Creator<Review>()
+    {
+
         @Override
         public Review createFromParcel(Parcel in) {
             return new Review(in);
@@ -43,6 +45,7 @@ public class Review implements Parcelable
         public Review[] newArray(int size) {
             return new Review[size];
         }
+
     };
 
     public String getAuthor() {
@@ -64,4 +67,5 @@ public class Review implements Parcelable
     public void setContent(String content) {
         this.content = content;
     }
+
 }

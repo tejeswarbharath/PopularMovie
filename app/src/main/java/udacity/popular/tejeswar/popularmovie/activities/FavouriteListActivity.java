@@ -31,7 +31,6 @@ import udacity.popular.tejeswar.popularmovie.parcelable.Review;
 import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.GridSpacingItemDecoration;
 import org.json.JSONObject;
-
 import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
 
 /**
@@ -39,6 +38,7 @@ import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
  */
 
 public class FavouriteListActivity extends AppCompatActivity
+
 {
 
     public boolean mTwoPane;
@@ -68,8 +68,6 @@ public class FavouriteListActivity extends AppCompatActivity
 
         toolbar.setTitle(getTitle());
 
-
-
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null)
@@ -85,22 +83,28 @@ public class FavouriteListActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         assert recyclerView != null;
+
         displayFavouriteMovies(recyclerView);
 
+        int spanCount = 2;
 
-        int spanCount = 2; // 2 columns
-        int spacing = 20; // 20px
+        int spacing = 20;
+
         boolean includeEdge = false;
+
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
 
         if (findViewById(R.id.favourite_detail_container) != null)
         {
+
             mTwoPane = true;
+
         }
 
     }
 
     @Override
+
     protected void onStart()
     {
 
@@ -236,6 +240,7 @@ public class FavouriteListActivity extends AppCompatActivity
 
 
     @Override
+
     public boolean onOptionsItemSelected(MenuItem item)
 
     {
@@ -311,7 +316,9 @@ public class FavouriteListActivity extends AppCompatActivity
             }
 
             @Override
+
             public String toString()
+
             {
 
                 return super.toString() + " '" + mTitleView.getText() + "'";
@@ -332,6 +339,8 @@ public class FavouriteListActivity extends AppCompatActivity
 
         }
 
+        //Displaying data for Tablet
+
         @Override
 
         public void onBindViewHolder(final Viewholder holder, int position)
@@ -350,6 +359,7 @@ public class FavouriteListActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v)
                 {
+
                     if (mTwoPane)
 
                     {
@@ -364,9 +374,9 @@ public class FavouriteListActivity extends AppCompatActivity
                         arguments.putString("overview", holder.mItem.getOverview());
                         arguments.putString("poster", holder.mItem.getImage());
                         arguments.putString("duration", holder.mItem.getDuration());
+
                         arguments.putParcelableArrayList("trailers", (ArrayList<? extends Parcelable>) holder.mItem.getTrailers());
                         arguments.putParcelableArrayList("reviews", (ArrayList<? extends Parcelable>) holder.mItem.getReviews());
-
 
                         MovieDetailFragment fragment = new MovieDetailFragment();
 
@@ -403,17 +413,23 @@ public class FavouriteListActivity extends AppCompatActivity
         }
 
         @Override
-        public int getItemCount() {
+        public int getItemCount()
+
+        {
+
             if (movieList != null)
                 return movieList.size();
             return 0;
+
         }
 
         public void setItemList(ArrayList<FavouriteMovie> list)
+
         {
 
             this.movieList = list;
 
         }
+
     }
 }

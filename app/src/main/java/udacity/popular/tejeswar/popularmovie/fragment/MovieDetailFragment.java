@@ -55,12 +55,14 @@ import udacity.popular.tejeswar.popularmovie.view.TrailerRecyclerViewAdapter;
 import static udacity.popular.tejeswar.popularmovie.BuildConfig.*;
 import static udacity.popular.tejeswar.popularmovie.utils.*;
 
-public class MovieDetailFragment extends Fragment {
+public class MovieDetailFragment extends Fragment
+
+{
+
+    private static final String LOG_TAG = "OverviewFragment";
 
     public static final String ARG_ITEM_ID = "movieId";
 
-
-    private static final String LOG_TAG = "OverviewFragment";
     private static final String STATE_ID = "movie_id";
     private static final String STATE_DATA = "flagDataType";
     private static final String STATE_TITLE = "title";
@@ -72,7 +74,6 @@ public class MovieDetailFragment extends Fragment {
     private static final String STATE_POSTER = "poster";
 
     private String movieId;
-
     private String mTitle;
     private String mYear;
     private String mDuration;
@@ -102,7 +103,9 @@ public class MovieDetailFragment extends Fragment {
     private int flagDataType;
 
     private int mColumnCount = 1;
+
     private Intent intent;
+
     private TextView txtTrailer;
 
     public MovieDetailFragment()
@@ -110,8 +113,10 @@ public class MovieDetailFragment extends Fragment {
 
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState)
+
     {
 
         super.onCreate(savedInstanceState);
@@ -131,6 +136,7 @@ public class MovieDetailFragment extends Fragment {
             vote_average = getArguments().getFloat("vote_ave");
             mOverview = getArguments().getString("overview");
             mPoster = getArguments().getString("poster");
+
             movieTrailersList = getArguments().getParcelableArrayList("trailer_list");
             movieReviewList = getArguments().getParcelableArrayList("review_list");
 
@@ -166,19 +172,21 @@ public class MovieDetailFragment extends Fragment {
 
 
         //for allowing access in movie poster
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
 
 
         //Check for any issues
         final YouTubeInitializationResult result = YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(getActivity());
 
-        if (result != YouTubeInitializationResult.SUCCESS) {
+        if (result != YouTubeInitializationResult.SUCCESS)
+        {
 
             result.getErrorDialog(getActivity(), 0).show();
+
         }
 
-        Log.v("HEHEHE - 1", "flagDataType  => " + flagDataType);
+        //Log.v("HEHEHE - 1", "flagDataType  => " + flagDataType);
 
     }
 
@@ -187,6 +195,7 @@ public class MovieDetailFragment extends Fragment {
     {
 
         super.onSaveInstanceState(outState);
+
         outState.putString(STATE_ID, movieId);
         outState.putInt(STATE_DATA, flagDataType);
         outState.putString(STATE_TITLE, mTitle);

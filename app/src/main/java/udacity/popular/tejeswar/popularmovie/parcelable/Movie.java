@@ -29,6 +29,7 @@ public class Movie implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags)
+
     {
 
         dest.writeString(id);
@@ -58,7 +59,6 @@ public class Movie implements Parcelable
     }
 
     public Movie(Parcel in)
-
     {
 
         this.date = in.readString();
@@ -101,7 +101,8 @@ public class Movie implements Parcelable
         return id;
     }
 
-    public String getImage() {
+    public String getImage()
+    {
         return image;
     }
 

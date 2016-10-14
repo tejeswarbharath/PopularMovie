@@ -89,6 +89,7 @@ public class CoverFlowAdapter extends BaseAdapter
     }
 
     private Bitmap decodeBase64Image(int position) {
+
         byte[] decodedString = Base64.decode(movieList.get(position).getImage(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
