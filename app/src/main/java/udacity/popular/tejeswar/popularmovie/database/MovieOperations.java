@@ -7,9 +7,12 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
-import udacity.popular.tejeswar.popularmovie.MovieContract;
-
+import udacity.popular.tejeswar.popularmovie.database.MovieContract.Details;
+import udacity.popular.tejeswar.popularmovie.database.MovieContract.Favourites;
+import udacity.popular.tejeswar.popularmovie.database.MovieContract.Trailers;
+import udacity.popular.tejeswar.popularmovie.database.MovieContract.Review;
 /**
  * Created by tejeswar on 10/8/2016.
  */
@@ -24,8 +27,8 @@ public class MovieOperations extends ContentProvider
     private static final int TRAILER = 3;
     private static final int TRAILER_ID = 4;
 
-    private static final int REVIEWS = 5;
-    private static final int REVIEWS_ID = 6;
+    private static final int REVIEW = 5;
+    private static final int REVIEW_ID = 6;
 
     private static final int FAVOURITE = 7;
     private static final int FAVOURITE_ID = 8;
@@ -57,11 +60,11 @@ public class MovieOperations extends ContentProvider
                 REVIEW_ID);
 
         URI_MATCHER.addURI(MovieContract.CONTENT_AUTHORITY,
-                Trailer.TABLE_TRAILER,
+                Trailers.TABLE_TRAILER,
                 TRAILER);
 
         URI_MATCHER.addURI(MovieContract.CONTENT_AUTHORITY,
-                Trailer.TABLE_TRAILER + "/#",
+                Trailers.TABLE_TRAILER + "/#",
                 TRAILER_ID);
 
         URI_MATCHER.addURI(MovieContract.CONTENT_AUTHORITY,
@@ -71,8 +74,6 @@ public class MovieOperations extends ContentProvider
         URI_MATCHER.addURI(MovieContract.CONTENT_AUTHORITY,
                 Favourites.TABLE_FAVOURITE + "/#",
                 FAVOURITE_ID);
-
-        return URI_MATCHER;
 
     }
 
@@ -110,16 +111,16 @@ public class MovieOperations extends ContentProvider
                 return Review.CONTENT_ITEM_TYPE;
 
             case TRAILER:
-                return Trailer.CONTENT_DIR_TYPE;
+                return Trailers.CONTENT_DIR_TYPE;
 
             case TRAILER_ID:
-                return Trailer.CONTENT_ITEM_TYPE;
+                return Trailers.CONTENT_ITEM_TYPE;
 
             case FAVOURITE:
                 return Favourites.CONTENT_DIR_TYPE;
 
             case FAVOURITE_ID:
-                return Favurites.CONTENT_ITEM_TYPE;
+                return Favourites.CONTENT_ITEM_TYPE;
 
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -159,7 +160,7 @@ public class MovieOperations extends ContentProvider
             }
 
 
-            case DETAIL_WITH_ID:
+            case DETAIL_ID:
 
             {
 
@@ -189,7 +190,7 @@ public class MovieOperations extends ContentProvider
                 return retCursor;
             }
 
-            case FAVOURITE_WITH_ID: {
+            case FAVOURITE_ID: {
 
                 retCursor = mHelper.getReadableDatabase().query(
                         Favourites.TABLE_FAVOURITE,
@@ -209,7 +210,7 @@ public class MovieOperations extends ContentProvider
             {
 
                 retCursor = mHelper.getReadableDatabase().query(
-                        MovieContract.Trailer.TABLE_TRAILER,
+                        Trailers.TABLE_TRAILER,
                         projection,
                         selection,
                         selectionArgs,
@@ -221,13 +222,13 @@ public class MovieOperations extends ContentProvider
 
             }
 
-            case TRAILER_WITH_ID:
+            case TRAILER_ID:
             {
 
                 retCursor = mHelper.getReadableDatabase().query(
-                        MovieContract.Trailer.TABLE_TRAILER,
+                        Trailers.TABLE_TRAILER,
                         projection,
-                        MovieContract.Trailer.MOVIE_ID + " = ?",
+                        Trailers.MOVIE_ID + " = ?",
                         new String[]{String.valueOf(ContentUris.parseId(uri))},
                         null,
                         null,
@@ -253,7 +254,7 @@ public class MovieOperations extends ContentProvider
 
             }
 
-            case REVIEW_WITH_ID:
+            case REVIEW_ID:
 
             {
 
@@ -295,12 +296,12 @@ public class MovieOperations extends ContentProvider
         {
             case DETAIL:
             {
-                long _id = db.insert(MovieContract.Details.TABLE_DETAIL, null, values);
+                long _id = db.insert(Details.TABLE_DETAIL, null, values);
 
                 if (_id > 0)
                 {
 
-                    returnUri = MovieContract.Details.buildDetailsUri(_id);
+                    returnUri = Details.buildDetailsUri(_id);
 
                 }
                 else
@@ -315,12 +316,12 @@ public class MovieOperations extends ContentProvider
             case TRAILER:
             {
 
-                long _id = db.insert(MovieContract.TrailerEntry.TABLE_TRAILER, null, values);
+                long _id = db.insert(MovieContract.Trailers.TABLE_TRAILER, null, values);
 
                 if (_id > 0)
                 {
 
-                    returnUri = MovieContract.TrailerEntry.buildTrailerUri(_id);
+                    returnUri = MovieContract.Trailers.buildTrailerUri(_id);
 
                 }
                 else
@@ -335,12 +336,12 @@ public class MovieOperations extends ContentProvider
             case REVIEW:
             {
 
-                long _id = db.insert(MovieContract.ReviewEntry.TABLE_REVIEW, null, values);
+                long _id = db.insert(MovieContract.Review.TABLE_REVIEW, null, values);
 
                 if (_id > 0)
                 {
 
-                    returnUri = MovieContract.ReviewEntry.buildReviewUri(_id);
+                    returnUri = MovieContract.Review.buildReviewUri(_id);
 
                 }
                 else
@@ -356,11 +357,11 @@ public class MovieOperations extends ContentProvider
             case FAVOURITE:
             {
 
-                long _id = db.insert(MovieContract.FavoriteEntry.TABLE_FAVORITE, null, values);
+                long _id = db.insert(MovieContract.Favourites.TABLE_FAVOURITE, null, values);
 
                 if (_id > 0)
                 {
-                    returnUri = MovieContract.FavoriteEntry.buildFavoriteUri(_id);
+                    returnUri = MovieContract.Favourites.buildFavouriteUri(_id);
                 }
                 else
                 {
@@ -389,7 +390,7 @@ public class MovieOperations extends ContentProvider
 
     {
 
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mHelper.getWritableDatabase();
 
         final int match = URI_MATCHER.match(uri);
 
@@ -398,9 +399,9 @@ public class MovieOperations extends ContentProvider
         switch (match)
         {
 
-            case FAVOURITE_WITH_ID :
-                numDeleted = db.delete(MovieContract.Favourites.TABLE_FAVORITE,
-                        MovieContract.Favourites.COLUMN_MOVIE_ID + " = ?",
+            case FAVOURITE_ID :
+                numDeleted = db.delete(Favourites.TABLE_FAVOURITE,
+                        Favourites.MOVIE_ID + " = ?",
                         new String[]{String.valueOf(ContentUris.parseId(uri))});
 
                 break;
@@ -420,7 +421,7 @@ public class MovieOperations extends ContentProvider
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs)
     {
 
-        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        final SQLiteDatabase db = mHelper.getWritableDatabase();
 
         int numUpdated = 0;
 
@@ -445,13 +446,13 @@ public class MovieOperations extends ContentProvider
 
             }
 
-            case DETAIL_WITH_ID:
+            case DETAIL_ID:
 
             {
 
                 numUpdated = db.update(MovieContract.Details.TABLE_DETAIL,
                         values,
-                        MovieContract.Details.COLUMN_MOVIE_ID + " = ?",
+                        MovieContract.Details.MOVIE_ID + " = ?",
                         new String[]{String.valueOf(ContentUris.parseId(uri))});
                 break;
 

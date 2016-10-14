@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract.Details;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract.Favourites;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract.Review;
-import udacity.popular.tejeswar.popularmovie.database.MovieContract.Trailer;
+import udacity.popular.tejeswar.popularmovie.database.MovieContract.Trailers;
 
 /**
  * Created by tejeswar on 10/7/2016.
@@ -50,9 +50,9 @@ public class MovieDataBaseHandler extends SQLiteOpenHelper
                     Details.RATING + TEXT_TYPE + COMMA_SEP +
                     Details.OVERVIEW + TEXT_TYPE + COMMA_SEP +
                     Details.POSTER + BLOB_TYPE + COMMA_SEP +
-                    " )";
+                    Details.VIEWED + INTEGER_TYPE + " )";
 
-    private static final String SQL_TABLE_REVIEWS =
+    private static final String SQL_TABLE_REVIEW =
 
             "CREATE TABLE " + Review.TABLE_REVIEW + " (" +
                     Review._ID + " INTEGER PRIMARY KEY," +
@@ -61,22 +61,22 @@ public class MovieDataBaseHandler extends SQLiteOpenHelper
                     Review.CONTENT + TEXT_TYPE +
                     " )";
 
-    private static final String SQL_TABLE_TRAILERS =
+    private static final String SQL_TABLE_TRAILER =
 
-            "CREATE TABLE " + Trailer.TABLE_TRAILER + " (" +
-                    Trailer._ID + " INTEGER PRIMARY KEY," +
-                    Trailer.MOVIE_ID + TEXT_TYPE + COMMA_SEP +
-                    Trailer.TRAILER_NUM + TEXT_TYPE + COMMA_SEP +
-                    Trailer.TRAILER_URL + TEXT_TYPE +
+            "CREATE TABLE " + Trailers.TABLE_TRAILER + " (" +
+                    Trailers._ID + " INTEGER PRIMARY KEY," +
+                    Trailers.MOVIE_ID + TEXT_TYPE + COMMA_SEP +
+                    Trailers.TRAILER_NUM + TEXT_TYPE + COMMA_SEP +
+                    Trailers.TRAILER_URL + TEXT_TYPE +
                     " )";
 
     private static final String SQL_TABLE_FAVOURITE =
 
-            "CREATE TABLE " + Favorites.TABLE_FAVORITE + " (" +
-                    Favorites._ID + " INTEGER PRIMARY KEY," +
-                    Favorites.COLUMN_MOVIE_ID + TEXT_TYPE + COMMA_SEP +
-                    Favorites.COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
-                    Favorites.COLUMN_IMAGE + TEXT_TYPE +
+            "CREATE TABLE " + Favourites.TABLE_FAVOURITE + " (" +
+                    Favourites._ID + " INTEGER PRIMARY KEY," +
+                    Favourites.MOVIE_ID + TEXT_TYPE + COMMA_SEP +
+                    Favourites.TITLE + TEXT_TYPE + COMMA_SEP +
+                    Favourites.IMAGE + TEXT_TYPE +
                     " )";
 
     private static final String SQL_DELETE_DETAIL =
@@ -89,7 +89,7 @@ public class MovieDataBaseHandler extends SQLiteOpenHelper
 
     private static final String SQL_DELETE_TRAILER =
 
-            "DROP TABLE IF EXISTS " + Trailer.TABLE_TRAILER;
+            "DROP TABLE IF EXISTS " + Trailers.TABLE_TRAILER;
 
     private static final String SQL_DELETE_FAVOURITE =
 
