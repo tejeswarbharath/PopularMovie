@@ -65,7 +65,7 @@ public class MovieDetailFragment extends Fragment
     private static final String STATE_YEAR = "year";
     private static final String STATE_DURATION = "duration";
     private static final String STATE_RATING = "rating";
-    private static final String STATE_VOTE = "vote_ave";
+    private static final String STATE_VOTE = "vote_average";
     private static final String STATE_OVERVIEW = "overview";
     private static final String STATE_POSTER = "poster";
 

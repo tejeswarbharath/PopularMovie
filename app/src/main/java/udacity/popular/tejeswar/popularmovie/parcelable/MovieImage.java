@@ -46,11 +46,11 @@ public class MovieImage implements Parcelable
         this.name = name;
     }
 
-    public MovieImage(long id, String image, String name)
+    public MovieImage(long id, String name, String image)
     {
         this.id = id;
-        this.image = image;
         this.name = name;
+        this.image = image;
     }
 
     @Override

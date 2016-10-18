@@ -43,7 +43,7 @@ public class Movie implements Parcelable
 
     }
 
-    public Movie(String date, String duration, String id, String image, String name, String overview, List<Review> reviews, List<Trailer> trailers, String vote)
+    public Movie(String date, String duration, String id, String image, String name,String overview, List<Review> reviews, List<Trailer> trailers, String vote)
 
     {
 

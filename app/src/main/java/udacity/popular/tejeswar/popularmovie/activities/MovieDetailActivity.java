@@ -255,7 +255,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
             case 0:
 
-                requestMovieDetail(movieId);
+               // requestMovieDetail(movieId);
                 requestMovieTrailer(movieId);
                 requestMovieReviews(movieId);
                 break;
@@ -818,7 +818,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
     }
 
-    private void requestMovieDetail(final String movieId) {
+/**    private void requestMovieDetail(final String movieId) {
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
         final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
@@ -888,7 +888,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
-    }
+    }**/
 
     private void requestMovieTrailer(final String movieId) {
         //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
@@ -1031,12 +1031,15 @@ public class MovieDetailActivity extends AppCompatActivity
             Log.e("xxxxx-add", "called(" + arr.length() + "): " + arr);
 
 
-            for (int i = 0; i < arr.length(); i++) {
+            for (int i = 0; i < arr.length(); i++)
+            {
+
                 JSONObject obj = arr.getJSONObject(i);
                 Long movie_id = obj.getLong("movie_id");
                 String movie_name = obj.getString("movie_name");
                 list.add(String.valueOf(movie_id));
                 Log.d("xxxxx-add", "adding movie: " + movie_name);
+
             }
 
             System.out.println("FAVORITES SIZE---------> " + list.size());

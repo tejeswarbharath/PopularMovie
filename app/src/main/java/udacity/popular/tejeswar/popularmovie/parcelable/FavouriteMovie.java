@@ -10,7 +10,7 @@ public class FavouriteMovie extends Movie implements Parcelable
 
 {
 
-    public FavouriteMovie(String date, String duration, String id, String image, String name, String overview, List<Review> reviews, List<Trailer> trailers, String vote)
+    public FavouriteMovie(String date,String duration,String id,String image,String name,String overview, List<Review> reviews, List<Trailer> trailers, String vote)
 
     {
 

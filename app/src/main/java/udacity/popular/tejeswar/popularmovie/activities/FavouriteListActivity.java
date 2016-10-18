@@ -264,7 +264,7 @@ public class FavouriteListActivity extends AppCompatActivity
 
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView)
+    private void setupRecyclerView(RecyclerView recyclerView)
 
     {
 
@@ -406,7 +406,6 @@ public class FavouriteListActivity extends AppCompatActivity
                                 .putExtra("year", holder.mItem.getDate())
                                 .putExtra("rating", holder.mItem.getVote())
                                 .putExtra("overview", holder.mItem.getOverview())
-                             //   .putExtra("poster",holder.mItem.getImage())
                                 .putExtra("duration", holder.mItem.getDuration());
 
                         context.startActivity(intent);
