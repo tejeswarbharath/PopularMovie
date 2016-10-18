@@ -84,7 +84,7 @@ public class FavouriteListActivity extends AppCompatActivity
 
         assert recyclerView != null;
 
-        displayFavouriteMovies(recyclerView);
+        //displayFavouriteMovies(recyclerView);
 
         int spanCount = 2;
 
@@ -266,7 +266,7 @@ public class FavouriteListActivity extends AppCompatActivity
 
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView)
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView)
 
     {
 

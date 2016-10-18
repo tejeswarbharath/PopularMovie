@@ -134,7 +134,7 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
         return new JSONArray(items);
     }
 
-    private void displayFavouriteMovies() {
+    /**private void displayFavouriteMovies() {
 
 
         list = new ArrayList<>();
@@ -191,7 +191,6 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
                     }
                 }
 
-                //**********LOGS************//
                 Log.d("xxxxx-add", "adding movie: " + movie_name);
                 System.out.println("TRAILER SIZE---------->" + movieTrailersList.size());
 
@@ -200,7 +199,6 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
                         ) {
                     System.out.println("TRAILER: " + t.getTrailer_url());
                 }
-                //**************************//
 
 
                 FavouriteMovie fav = new FavouriteMovie( movie_date,movie_duration,movie_id,movie_image,movie_name,movie_overview,movieReviewsList, movieTrailersList,movie_vote);
@@ -222,7 +220,7 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
             Log.e("ERROR", e.getMessage());
         }
 
-    }
+    }**/
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args)

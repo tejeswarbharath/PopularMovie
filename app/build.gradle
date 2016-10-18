@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "udacity.popular.tejeswar.popularmovie"
-        minSdkVersion 17
+        minSdkVersion 22
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
