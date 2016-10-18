@@ -21,6 +21,7 @@ import udacity.popular.tejeswar.popularmovie.parcelable.FavouriteMovie;
 /**
  * Created by tejeswar on 10/10/2016.
  */
+
 public class CoverFlowAdapter extends BaseAdapter
 {
 

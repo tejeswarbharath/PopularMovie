@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:name="udacity.popular.tejeswar.popularmovie.fragment.MovieDetailFragment"
     android:id="@+id/movie_list"
     app:layoutManager="LinearLayoutManager"
     tools:context=".activities.MovieActivity"

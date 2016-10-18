@@ -64,7 +64,7 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main_carousel);
         mCoverFlow = (FeatureCoverFlow) findViewById(R.id.coverflow);
 
-        displayFavouriteMovies();
+        //displayFavouriteMovies();
 
         // initialize our CursorAdapter
 
@@ -92,8 +92,7 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
                             .putExtra("year", cursor.getString(COL_MOVIE_YEAR))
                             .putExtra("rating", cursor.getString(COL_MOVIE_RATING))
                             .putExtra("overview", cursor.getString(COL_MOVIE_OVERVIEW))
-                            .putExtra("duration", cursor.getString(COL_MOVIE_DURATION))
-                            .putExtra("poster",cursor.getString(COL_MOVIE_POSTER));
+                            .putExtra("duration", cursor.getString(COL_MOVIE_DURATION));
 
                     MainCarousel.this.startActivity(i);
 
