@@ -400,6 +400,7 @@ public class MovieOperations extends ContentProvider
         {
 
             case FAVOURITE_ID :
+
                 numDeleted = db.delete(Favourites.TABLE_FAVOURITE,
                         Favourites.MOVIE_ID + " = ?",
                         new String[]{String.valueOf(ContentUris.parseId(uri))});

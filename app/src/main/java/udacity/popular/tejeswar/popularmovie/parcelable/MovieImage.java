@@ -24,7 +24,8 @@ public class MovieImage implements Parcelable
         return id;
     }
 
-    public String getImage() {
+    public String getImage()
+    {
         return image;
     }
 
