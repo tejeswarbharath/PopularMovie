@@ -1,15 +1,11 @@
 package udacity.popular.tejeswar.popularmovie.activities;
 
-import static com.android.volley.toolbox.Volley.newRequestQueue;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -37,6 +33,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.android.volley.toolbox.Volley;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -55,9 +52,7 @@ import udacity.popular.tejeswar.popularmovie.database.MovieDataBaseHandler;
 import udacity.popular.tejeswar.popularmovie.fragment.MovieDetailFragment;
 import udacity.popular.tejeswar.popularmovie.parcelable.MovieImage;
 import udacity.popular.tejeswar.popularmovie.utils;
-
-import static udacity.popular.tejeswar.popularmovie.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-import static udacity.popular.tejeswar.popularmovie.utils.showSuccessDialog;
+import udacity.popular.tejeswar.popularmovie.BuildConfig;
 
 /**
  * Created by tejeswar on 10/5/2016.
@@ -86,6 +81,7 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
     private String encodedString = "";
 
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState)
 
     {
@@ -106,26 +102,29 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
         {
 
-            imageLoader = ImageLoader.getInstance();
+                imageLoader = ImageLoader.getInstance();
 
-            imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+                imageLoader.init(ImageLoaderConfiguration.createDefault(this));
 
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.movie_list);
+
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         //add spacing
         int spanCount = 2; // 2 columns
         int spacing = 20; // 20px
         boolean includeEdge = false;
+
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
 
-
         assert recyclerView != null;
+
         setupRecyclerView(recyclerView);
 
         if (findViewById(R.id.movie_detail_container) != null)
+
         {
 
             mTwoPane = true;
@@ -141,6 +140,7 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     @Override
+
     protected void onStart()
 
     {
@@ -182,9 +182,9 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
         {
 
-            int movieIdIndex = locationCursor.getColumnIndex(Details.MOVIE_ID);
+                int movieIdIndex = locationCursor.getColumnIndex(Details.MOVIE_ID);
 
-            movie_id = locationCursor.getString(movieIdIndex);
+                movie_id = locationCursor.getString(movieIdIndex);
 
         }
 
@@ -215,27 +215,31 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
     }
 
     private void requestMovies()
+
     {
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
 
         final String sort_order = sortOption;
 
-        final String api_key = "?api_key=" + OPEN_WEATHER_MAP_API_KEY ;
+        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY ;
 
         Log.e("SORT OPTION", sort_order);
 
         String original_url = BASE_PATH + sort_order + api_key;
 
-        RequestQueue queue = newRequestQueue(MovieActivity.this);
+        RequestQueue queue = Volley.newRequestQueue(MovieActivity.this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, original_url,
 
                 new Response.Listener<String>()
+
                 {
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response)
+
+                    {
 
                         System.out.println(response);
 
@@ -271,6 +275,8 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
                                 list.add(movieImage);
 
+                                Log.v("xxxxx-add", "adding movie: " + movie_name);
+
                                 movieImages.add(posterPath);
 
                                 loadImageBitmap(posterPath);
@@ -279,8 +285,10 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
                             }
 
-                            for (MovieImage img : list)
+                            for ( MovieImage img : list)
+
                             {
+
                                 Log.d("MOVIE ID: ", String.valueOf(img.getId()));
                                 Log.d("MOVIE NAME: ", img.getName());
                                 Log.d("MOVIE IMAGE: ", img.getImage());
@@ -297,22 +305,35 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
                             recyclerView.getAdapter().notifyDataSetChanged();
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+
+                        catch (JSONException e)
+                        {
+
+                            e.printStackTrace();
+
+                        }
+
                     }
                 },
-                new Response.ErrorListener() {
+
+                new Response.ErrorListener()
+
+                {
 
                     @Override
+
                     public void onErrorResponse(VolleyError error) {
 
                         if (error instanceof NoConnectionError)
                         {
-                            showSuccessDialog(MovieActivity.this, R.string.no_connection, R.string.net).show();
+
+                            utils.showSuccessDialog(MovieActivity.this, R.string.no_connection, R.string.net).show();
+
                         }
 
                     }
+
                 });
 
         queue.add(stringRequest);
@@ -345,9 +366,11 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
+
     {
 
         getMenuInflater().inflate(R.menu.menu_popular_movies, menu);
+
         return true;
 
     }
@@ -355,8 +378,10 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings)
+        {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
@@ -367,7 +392,8 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
         {
 
             try {
-                if (utils.getFavouriteMovies(this) != null) {
+                if (utils.getFavouriteMovies(this) != null)
+                {
                     Intent intent = new Intent(this, FavouriteListActivity.class);
                     startActivity(intent);
                 }
@@ -375,23 +401,27 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
                 {
                     utils.showSuccessDialog(this, R.string.action_favorite, R.string.no_favorites).show();
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e)
+            {
                 e.printStackTrace();
             }
         }
 
         if (id == R.id.action_favorite)
         {
-            Cursor c =
-                    this.getContentResolver().query(MovieContract.Favourites.CONTENT_URI,
+
+            Cursor c = this.getContentResolver().query(MovieContract.Favourites.CONTENT_URI,
                             new String[]{MovieContract.Favourites._ID},
                             null,
                             null,
                             null);
+
             if (c.getCount() == 0)
             {
                 utils.showSuccessDialog(this, R.string.action_favorite, R.string.no_favorites).show();
             }
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -400,8 +430,11 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
     private void setupRecyclerView(RecyclerView recyclerView)
     {
+
         mAdapter = new MovieItemRecyclerViewAdapter(this, movieImages, list);
+
         recyclerView.setAdapter(mAdapter);
+
     }
 
 
@@ -442,20 +475,26 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
 
         public MovieItemRecyclerViewAdapter(Context context, List<String> imageUrls, List<MovieImage> movieImages)
         {
+
             this.context = context;
             this.imageUrls = imageUrls;
             this.movieImages = movieImages;
+
         }
 
         @Override
         public int getItemCount()
+
         {
+
             if (movieImages != null)
                 return movieImages.size();
             return 0;
+
         }
 
         public void setItemList(List<MovieImage> movieImages)
+
         {
 
             this.movieImages = movieImages;
@@ -463,7 +502,9 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
         }
 
         @Override
+
         public MovieItemRecyclerViewAdapter.Viewholder onCreateViewHolder(ViewGroup parent, int viewType)
+
         {
 
             View view = LayoutInflater.from(parent.getContext())
@@ -491,14 +532,17 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
             holder.mTitleView.setText(movieImages.get(position).getName());
 
             holder.mView.setOnClickListener(new View.OnClickListener()
+
             {
 
                 @Override
                 public void onClick(View v)
                 {
+
                     System.out.println(holder.mItem.getName());
                     if (mTwoPane)
                     {
+
                         Bundle arguments = new Bundle();
                         arguments.putString(MovieDetailFragment.ARG_ITEM_ID, Long.toString(holder.mItem.getId()));
                         arguments.putString("movieId", Long.toString(holder.mItem.getId()));
@@ -510,31 +554,43 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.movie_detail_container, fragment)
                                 .commit();
+
                     }
                     else
                     {
 
                         Context context = v.getContext();
+
                         Intent intent = new Intent(context, MovieDetailActivity.class);
+
                         intent.putExtra("movieId", Long.toString(holder.mItem.getId()))
                                 .putExtra("flagData", 0)
                                 .putExtra("title", holder.mItem.getName());
 
-
                         context.startActivity(intent);
+
                     }
+
                 }
+
             });
+
         }
 
-        public class Viewholder extends RecyclerView.ViewHolder {
+        public class Viewholder extends RecyclerView.ViewHolder
+
+        {
+
             public final View mView;
             public final ImageView mImageView;
             public final TextView mTitleView;
 
             public MovieImage mItem;
 
-            public Viewholder(View view) {
+            public Viewholder(View view)
+
+            {
+
                 super(view);
                 mView = view;
                 mImageView = (ImageView) view.findViewById(R.id.img_movie);
@@ -543,9 +599,15 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
             }
 
             @Override
-            public String toString() {
+
+            public String toString()
+
+            {
+
                 return super.toString() + " '" + mTitleView.getText() + "'";
+
             }
+
         }
     }
 }

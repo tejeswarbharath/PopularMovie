@@ -24,7 +24,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
         addPreferencesFromResource(R.xml.pref_general);
 
-        //for all preferences, attach an onPreferenceChangeListener so the UI summary can be updated when the preferences changes
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_sort_key)));
 
     }
@@ -51,7 +50,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         if (preference instanceof ListPreference)
         {
             ListPreference listPreference = (ListPreference) preference;
+
             int prefIndex = listPreference.findIndexOfValue(stringValue);
+
             if (prefIndex >= 0)
             {
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
@@ -59,9 +60,13 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         }
         else
         {
+
             preference.setSummary(stringValue);
+
         }
+
         return true;
+
     }
 
 }

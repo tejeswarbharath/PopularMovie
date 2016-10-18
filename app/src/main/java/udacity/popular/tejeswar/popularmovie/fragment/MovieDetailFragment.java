@@ -52,17 +52,13 @@ import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.view.ReviewRecyclerViewAdapter;
 import udacity.popular.tejeswar.popularmovie.view.TrailerRecyclerViewAdapter;
 
-import static udacity.popular.tejeswar.popularmovie.BuildConfig.*;
-import static udacity.popular.tejeswar.popularmovie.utils.*;
 
 public class MovieDetailFragment extends Fragment
 
 {
 
     private static final String LOG_TAG = "OverviewFragment";
-
     public static final String ARG_ITEM_ID = "movieId";
-
     private static final String STATE_ID = "movie_id";
     private static final String STATE_DATA = "flagDataType";
     private static final String STATE_TITLE = "title";
@@ -133,7 +129,7 @@ public class MovieDetailFragment extends Fragment
             mYear = getArguments().getString("year");
             mDuration = getArguments().getString("duration");
             mRating = getArguments().getString("rating");
-            vote_average = getArguments().getFloat("vote_ave");
+            vote_average = getArguments().getFloat("vote_average");
             mOverview = getArguments().getString("overview");
             mPoster = getArguments().getString("poster");
 
@@ -172,11 +168,14 @@ public class MovieDetailFragment extends Fragment
 
 
         //for allowing access in movie poster
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
 
 
         //Check for any issues
+
         final YouTubeInitializationResult result = YouTubeApiServiceUtil.isYouTubeApiServiceAvailable(getActivity());
 
         if (result != YouTubeInitializationResult.SUCCESS)
@@ -191,11 +190,12 @@ public class MovieDetailFragment extends Fragment
     }
 
     @Override
+
     public void onSaveInstanceState(Bundle outState)
+
     {
 
         super.onSaveInstanceState(outState);
-
         outState.putString(STATE_ID, movieId);
         outState.putInt(STATE_DATA, flagDataType);
         outState.putString(STATE_TITLE, mTitle);
@@ -256,45 +256,55 @@ public class MovieDetailFragment extends Fragment
 
         if (cursor.moveToFirst())
         {
+
             int posterIndex = cursor.getColumnIndex(MovieContract.Favourites.IMAGE);
-            mPoster = cursor.getString(posterIndex); //column_image is 3rd column
+
+            mPoster = cursor.getString(posterIndex);
+
         }
 
         cursor.close();
 
-                movieReviewList = new ArrayList<>();
+            //Calling Reviews
 
-                uri = MovieContract.Review.buildReviewUri(Long.parseLong(movieId));
+            movieReviewList = new ArrayList<>();
 
-                cursor = getContext().getContentResolver().query(
-                        uri,
-                        null,
-                        MovieContract.Review.MOVIE_ID + " = ?",
-                        new String[]{movieId},
-                        null);
+            uri = MovieContract.Review.buildReviewUri(Long.parseLong(movieId));
 
-                int authorIndex = 0;
-                int contentIndex = 0;
-                if (cursor.moveToFirst())
-                {
-                    authorIndex = cursor.getColumnIndex(MovieContract.Review.AUTHOR);
-                    contentIndex = cursor.getColumnIndex(MovieContract.Review.CONTENT);
-                }
+            cursor = getContext().getContentResolver().query(
+                    uri,
+                    null,
+                    MovieContract.Review.MOVIE_ID + " = ?",
+                    new String[]{movieId},
+                    null);
 
-                while (cursor.isAfterLast() == false) {
+            int authorIndex = 0;
+            int contentIndex = 0;
 
-                    String author = cursor.getString(authorIndex);
-                    String content = cursor.getString(contentIndex);
+        if (cursor.moveToFirst())
+            {
+                authorIndex = cursor.getColumnIndex(MovieContract.Review.AUTHOR);
+                contentIndex = cursor.getColumnIndex(MovieContract.Review.CONTENT);
+            }
 
-                    Review r = new Review(author, content);
-                    movieReviewList.add(r);
-                }
+            while (cursor.isAfterLast() == false)
+            {
 
-                cursor.close();
+                String author = cursor.getString(authorIndex);
+                String content = cursor.getString(contentIndex);
 
+                Review r = new Review(author, content);
+                movieReviewList.add(r);
+
+            }
+
+            cursor.close();
+
+        //Calling Movies
 
         movieTrailersList = new ArrayList<>();
         uri = MovieContract.Trailers.buildTrailerUri(Long.parseLong(movieId));
+
         cursor = getContext().getContentResolver().query(
                 uri,
                 null,
@@ -304,18 +314,25 @@ public class MovieDetailFragment extends Fragment
 
         int numIndex = 0;
         int urlIndex = 0;
-        if (cursor.moveToFirst()) {
+
+        if (cursor.moveToFirst())
+        {
+
             numIndex = cursor.getColumnIndex(MovieContract.Trailers.TRAILER_NUM);
             urlIndex = cursor.getColumnIndex(MovieContract.Trailers.TRAILER_URL);
+
         }
 
-        while (cursor.isAfterLast() == false) {
+        while (cursor.isAfterLast() == false)
+
+        {
 
             String num = cursor.getString(numIndex);
             String url = cursor.getString(urlIndex);
 
             Trailer t = new Trailer(num, url);
             movieTrailersList.add(t);
+
         }
 
         cursor.close();
@@ -325,12 +342,14 @@ public class MovieDetailFragment extends Fragment
     }
 
     private void requestMovieReviews(String movieId)
+
     {
 
         movieReviewList = new ArrayList<>();
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=" + OPEN_WEATHER_MAP_API_KEY;
+        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+
         String id = movieId;
         final String vid = "/reviews";
         final String reviews_url = BASE_PATH + id + vid + api_key;
@@ -338,12 +357,16 @@ public class MovieDetailFragment extends Fragment
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, reviews_url,
+
                 new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
 
                         System.out.println(response);
-                        try {
+
+                        try
+                        {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray results = jsonObject.getJSONArray("results");
                             String author = "";
@@ -389,7 +412,7 @@ public class MovieDetailFragment extends Fragment
                     public void onErrorResponse(VolleyError error) {
 
                         if (error instanceof NoConnectionError) {
-                            showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -407,7 +430,7 @@ public class MovieDetailFragment extends Fragment
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
 
-        final String api_key = "?api_key=a3e6990e5c4ec2eb8a31a0d2b1b356a9";
+        final String api_key = "?api_key="+BuildConfig.OPEN_WEATHER_MAP_API_KEY;
 
         String id = movieId;
 
@@ -418,6 +441,7 @@ public class MovieDetailFragment extends Fragment
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, trailer_url,
+
                 new Response.Listener<String>()
                 {
 
@@ -437,9 +461,11 @@ public class MovieDetailFragment extends Fragment
                                 String trailer_key = obj.getString("key");
 
                                 String youtube_trailer = trailer_key;
+
                                 String trailer_num = "Trailer " + (i + 1);
 
                                 Trailer trailer = new Trailer(trailer_num, youtube_trailer);
+
                                 movieTrailersList.add(trailer);
 
                             }
@@ -463,7 +489,7 @@ public class MovieDetailFragment extends Fragment
 
                         if (error instanceof NoConnectionError) {
 
-                            showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
 
                         }
                     }
@@ -477,7 +503,7 @@ public class MovieDetailFragment extends Fragment
     {
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=" + OPEN_WEATHER_MAP_API_KEY;
+        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
         String id = movieId;
 
         final String original_url = BASE_PATH + id + api_key;
@@ -490,13 +516,18 @@ public class MovieDetailFragment extends Fragment
         final String image_size = "w500";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, original_url,
+
                 new Response.Listener<String>() {
+
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response)
+
+                    {
 
                         System.out.println(response);
 
                         try
+
                         {
 
                             JSONObject jsonObject = new JSONObject(response);
@@ -526,15 +557,22 @@ public class MovieDetailFragment extends Fragment
                         }
                     }
                 },
+
                 new Response.ErrorListener() {
+
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        if (error instanceof NoConnectionError) {
+                        if (error instanceof NoConnectionError)
 
-                            showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+                        {
+
+                            utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+
                         }
+
                     }
+
                 });
 
         queue.add(stringRequest);
@@ -542,7 +580,9 @@ public class MovieDetailFragment extends Fragment
     }
 
 
-    public void setValuesOfView(String mYear, String mDuration, String mOverview, float vote_average, String mPoster) {
+    public void setValuesOfView(String mYear, String mDuration, String mOverview, float vote_average, String mPoster)
+    {
+
         txtYear.setText(mYear);
         txtDuration.setText(mDuration);
         txtDescription.setText(mOverview);
@@ -559,8 +599,9 @@ public class MovieDetailFragment extends Fragment
                         .into(imgPoster);
                 break;
             case 1:
+
                 //set movie poster
-                imgPoster.setImageBitmap(decodeBase64Image(mPoster));
+                imgPoster.setImageBitmap(utils.decodeBase64Image(mPoster));
                 break;
 
         }
@@ -590,6 +631,7 @@ public class MovieDetailFragment extends Fragment
             ratingBar = (RatingBar) rootView.findViewById(R.id.ratingBar);
 
             Drawable progress = ratingBar.getProgressDrawable();
+
             DrawableCompat.setTint(progress, Color.YELLOW);
 
             LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
@@ -602,9 +644,11 @@ public class MovieDetailFragment extends Fragment
             }
 
             trailerRecyclerView = (RecyclerView) rootView.findViewById(R.id.trailer_recyclerview);
+
             setTrailerRecyclerView(trailerRecyclerView);
 
             reviewRecvyclerView = (RecyclerView) rootView.findViewById(R.id.review_recyclerview);
+
             setReviewRecyclerView(reviewRecvyclerView);
 
             txtTrailer = (TextView) rootView.findViewById(R.id.txt_trailer);
@@ -665,6 +709,7 @@ public class MovieDetailFragment extends Fragment
         }
 
         trailerListAdapter = new TrailerRecyclerViewAdapter(mTrailerListener,movieTrailersList);
+
         trailer_recyclerView.setAdapter(trailerListAdapter);
 
 
@@ -681,7 +726,7 @@ public class MovieDetailFragment extends Fragment
 
                 Toast.makeText(getActivity(), trailer.getTrailer_url() + " is selected!", Toast.LENGTH_SHORT).show();
 
-                launchYoutube(OPEN_WEATHER_MAP_API_KEY, url);
+                launchYoutube(BuildConfig.OPEN_WEATHER_MAP_API_KEY, url);
 
             }
 
@@ -695,7 +740,8 @@ public class MovieDetailFragment extends Fragment
 
     }
 
-    private void launchYoutube(String api_key, String video_id) {
+    private void launchYoutube(String api_key, String video_id)
+    {
 
         Intent intent = YouTubeStandalonePlayer.createVideoIntent(getActivity(), api_key, video_id);
         startActivity(intent);

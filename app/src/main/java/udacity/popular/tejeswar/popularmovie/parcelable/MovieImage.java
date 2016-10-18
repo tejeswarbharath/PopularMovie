@@ -7,10 +7,13 @@ import android.os.Parcelable;
  * Created by tejeswar on 10/9/2016.
  */
 public class MovieImage implements Parcelable
+
 {
 
     public long id;
+
     public String name;
+
     public String image;
 
     public static Creator<MovieImage> getCREATOR() {
@@ -25,11 +28,12 @@ public class MovieImage implements Parcelable
         return image;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setId(long id) {
+    public void setId(long id){
         this.id = id;
     }
 
@@ -86,4 +90,5 @@ public class MovieImage implements Parcelable
             return new MovieImage[size];
         }
     };
+
 }

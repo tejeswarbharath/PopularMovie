@@ -15,17 +15,25 @@ import udacity.popular.tejeswar.popularmovie.parcelable.Review;
  */
 public class ReviewRecyclerViewAdapter extends RecyclerView.Adapter<ReviewRecyclerViewAdapter.ViewHolder>
 {
+
     private List<Review> reviewsList;
+
     private final OnListFragmentInteractionListener mListener;
 
-    public ReviewRecyclerViewAdapter(OnListFragmentInteractionListener mListener, List<Review> reviewsList) {
+    public ReviewRecyclerViewAdapter(OnListFragmentInteractionListener mListener, List<Review> reviewsList)
+
+    {
+
         this.mListener = mListener;
+
         this.reviewsList = reviewsList;
+
     }
 
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         if (reviewsList != null)
             return reviewsList.size();
         return 0;

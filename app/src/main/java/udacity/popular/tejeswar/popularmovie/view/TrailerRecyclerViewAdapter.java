@@ -22,18 +22,25 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
 
     private final OnListFragmentInteractionListener mListener;
 
-    public TrailerRecyclerViewAdapter(OnListFragmentInteractionListener mListener, List<Trailer> trailerList) {
+    public TrailerRecyclerViewAdapter(OnListFragmentInteractionListener mListener, List<Trailer> trailerList)
+    {
+
         this.mListener = mListener;
         this.trailerList = trailerList;
+
     }
 
 
     @Override
     public TrailerRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+
     {
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_trailer, parent, false);
+
         return new ViewHolder(view);
+
     }
 
     @Override
@@ -41,7 +48,6 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     {
         holder.trailer = trailerList.get(position);
         holder.trailer_num.setText(trailerList.get(position).getTrailer_num());
-        //holder.trailer_url.setText(trailerList.get(position).getTrailerUrl());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +79,7 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
     public class ViewHolder extends RecyclerView.ViewHolder
 
     {
+
         public View mView;
         public TextView trailer_num;
         //public TextView trailer_url;
@@ -100,4 +107,5 @@ public class TrailerRecyclerViewAdapter extends RecyclerView.Adapter<TrailerRecy
         }
 
     }
+
 }

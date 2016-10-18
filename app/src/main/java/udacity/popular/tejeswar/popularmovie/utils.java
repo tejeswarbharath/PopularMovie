@@ -23,7 +23,9 @@ import udacity.popular.tejeswar.popularmovie.R;
  * Created by tejeswar on 10/10/2016.
  */
 
-public final class utils {
+public final class utils
+
+{
 
     private static final String FAVOURITES = "favourites";
 
@@ -33,7 +35,7 @@ public final class utils {
 
         throw new AssertionError();
 
-        }
+    }
 
     public static AlertDialog showSuccessDialog(final Context context, int title, int message)
 
@@ -75,9 +77,7 @@ public final class utils {
 
         preferences.edit().putString(FAVOURITES, jsonArray.toString()).commit();
 
-        Snackbar.make(view, R.string.fav_add, Snackbar.LENGTH_SHORT)
-
-                .setAction("Action", null).show();
+        Snackbar.make(view, R.string.fav_add, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
     }
 
@@ -115,16 +115,18 @@ public final class utils {
             String id = line.getString("movie_id");
 
             if (!id.equals(movieId))
+
             {
+
                 blank.put(line);
+
             }
 
         }
 
         preferences.edit().putString("favourites", blank.toString()).apply();
 
-        Snackbar.make(view, R.string.fav_remove, Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show();
+        Snackbar.make(view, R.string.fav_remove, Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
     }
 
@@ -135,6 +137,7 @@ public final class utils {
         String encodedString = "";
 
         URL imageurl = new URL(poster);
+
         try
 
         {

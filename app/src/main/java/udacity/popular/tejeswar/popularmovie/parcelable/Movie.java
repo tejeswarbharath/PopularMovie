@@ -1,14 +1,15 @@
 package udacity.popular.tejeswar.popularmovie.parcelable;
 
 import java.util.List;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * Created by tejeswar on 10/9/2016.
  */
+
 public class Movie implements Parcelable
+
 {
 
     public String id;
@@ -162,4 +163,5 @@ public class Movie implements Parcelable
     public void setVote(String vote) {
         this.vote = vote;
     }
+
 }

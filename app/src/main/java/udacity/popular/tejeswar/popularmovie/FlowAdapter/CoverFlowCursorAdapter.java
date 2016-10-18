@@ -26,11 +26,11 @@ public class CoverFlowCursorAdapter extends CursorAdapter
 
     private Context context;
 
-    public CoverFlowCursorAdapter(Context context, Cursor c, int flags, Context context1)
-    {
+    public CoverFlowCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
-        context = context1;
+        this.context = context;
     }
+
 
     @Override
     public void bindView(View view, Context context, Cursor cursor)
@@ -82,7 +82,9 @@ public class CoverFlowCursorAdapter extends CursorAdapter
     {
 
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
         return decodedByte;
 
     }
@@ -91,9 +93,11 @@ public class CoverFlowCursorAdapter extends CursorAdapter
     {
 
         private TextView txtMovieName;
+
         private ImageView imgMovieImage;
 
         public Viewholder(View v)
+
         {
 
             imgMovieImage = (ImageView) v.findViewById(R.id.image);
@@ -101,6 +105,7 @@ public class CoverFlowCursorAdapter extends CursorAdapter
             txtMovieName = (TextView) v.findViewById(R.id.name);
 
         }
+
     }
 
 }

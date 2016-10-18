@@ -41,10 +41,7 @@ import udacity.popular.tejeswar.popularmovie.database.MovieContract.Trailers;
 import udacity.popular.tejeswar.popularmovie.parcelable.Review;
 import udacity.popular.tejeswar.popularmovie.parcelable.Trailer;
 import udacity.popular.tejeswar.popularmovie.utils;
-import static udacity.popular.tejeswar.popularmovie.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-import static udacity.popular.tejeswar.popularmovie.utils.*;
-import static udacity.popular.tejeswar.popularmovie.utils.getFavouriteMovies;
-import static udacity.popular.tejeswar.popularmovie.utils.removeFromFavourites;
+import udacity.popular.tejeswar.popularmovie.BuildConfig;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,10 +58,12 @@ public class MovieDetailActivity extends AppCompatActivity
 
 {
 
+    private static final String LOG_TAG = "MovieDetailActivity";
     short flagSave;
     private String movieId;
     private int flagData;
     private FloatingActionButton fab;
+    private static final String TAG = MovieDetailActivity.class.getSimpleName();
     private String first_trailer_url;
     private String mTitle;
     private String mYear;
@@ -80,7 +79,7 @@ public class MovieDetailActivity extends AppCompatActivity
     private static final String STATE_YEAR = "year";
     private static final String STATE_DURATION = "duration";
     private static final String STATE_RATING = "rating";
-    private static final String STATE_VOTE = "vote_ave";
+    private static final String STATE_VOTE = "vote_average";
     private static final String STATE_OVERVIEW = "overview";
     private static final String STATE_POSTER = "poster";
 
@@ -132,6 +131,7 @@ public class MovieDetailActivity extends AppCompatActivity
             //Toast.makeText(this, LOG_TAG + " MY ID: " + movieId, Toast.LENGTH_SHORT).show();
 
             if (flagData == 1)
+
             {
 
                 mTitle = intent.getStringExtra("title");
@@ -152,6 +152,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
 
         if (savedInstanceState != null)
+
         {
 
             movieId = savedInstanceState.getString(STATE_ID);
@@ -174,11 +175,10 @@ public class MovieDetailActivity extends AppCompatActivity
 
         }
 
-
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         try {
-            if (getFavouriteMovies(this) != null)
+            if (utils.getFavouriteMovies(this) != null)
             {
                 checkMovieID();
             }
@@ -225,7 +225,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         try
                         {
 
-                            removeFromFavourites(MovieDetailActivity.this, movieId, view);
+                            utils.removeFromFavourites(MovieDetailActivity.this, movieId, view);
                             deleteFavouriteinDB(Long.parseLong(movieId));
 
                         } catch (JSONException e) {
@@ -234,7 +234,6 @@ public class MovieDetailActivity extends AppCompatActivity
                         flagSave = 0;
                         break;
                 }
-
 
             }
         });
@@ -543,6 +542,7 @@ public class MovieDetailActivity extends AppCompatActivity
             item.put("movie_name", mTitle);
 
             item.put("movie_image", encodedString);
+            Log.e("BASE64=========>", encodedString);
 
             item.put("movie_overview", mOverview);
             item.put("movie_year", mYear);
@@ -556,7 +556,7 @@ public class MovieDetailActivity extends AppCompatActivity
             int size = saveTrailers().length();
             System.out.println("FAVORITE TRAILER SIZE " + size);
 
-            saveFavouriteMovies(this, item, view);
+            utils.saveFavouriteMovies(this, item, view);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -612,6 +612,8 @@ public class MovieDetailActivity extends AppCompatActivity
             }
         }
 
+
+        Log.d(LOG_TAG, "NUMBER OF REVIEWS: %%%%%%%%%%%%%%%" + reviewList.size());
         return reviews;
     }
 
@@ -655,6 +657,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
     private void getLocalData()
     {
+
         mTitle = intent.getStringExtra("title");
         mYear = intent.getStringExtra("year");
         mDuration = intent.getStringExtra("duration");
@@ -670,10 +673,12 @@ public class MovieDetailActivity extends AppCompatActivity
         reviewList = new ArrayList<>();
         List<Review> reviews = intent.getParcelableArrayListExtra("reviews");
         reviewList = reviews;
+
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState)
+    {
 
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putString(STATE_ID, movieId);
@@ -690,9 +695,10 @@ public class MovieDetailActivity extends AppCompatActivity
 
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
 
+        super.onRestoreInstanceState(savedInstanceState);
         movieId = savedInstanceState.getString(STATE_ID);
         flagData = savedInstanceState.getInt(STATE_DATA);
         mTitle = savedInstanceState.getString(STATE_TITLE);
@@ -706,15 +712,19 @@ public class MovieDetailActivity extends AppCompatActivity
     }
 
 
-    private void requestMovieReviews(String movieId) {
-        //http://api.themoviedb.org/3/reviews/293660/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
+    private void requestMovieReviews(String movieId)
+    {
 
         reviewList = new ArrayList<>();
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=" + OPEN_WEATHER_MAP_API_KEY;
+
+        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+
         final String id = movieId;
+
         final String vid = "/reviews";
+
         final String reviews_url = BASE_PATH + id + vid + api_key;
 
         Log.d("TRAILER URL--------> ", reviews_url);
@@ -725,9 +735,12 @@ public class MovieDetailActivity extends AppCompatActivity
 
         // Formulate the request and handle the response.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, reviews_url,
-                new Response.Listener<String>() {
+
+                new Response.Listener<String>()
+                {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response)
+                    {
                         // Do something with the response
                         System.out.println(response);
                         try {
@@ -763,33 +776,44 @@ public class MovieDetailActivity extends AppCompatActivity
 
                             }
 
-                            if (reviewList.size() == 0) {
+                            if (reviewList.size() == 0)
+                            {
+
                                 String author = "No Reviews Available";
                                 String content = " ";
 
                                 //add to a review object
                                 Review reviews = new Review(author, content);
                                 reviewList.add(reviews);
+
                             }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+
+                        catch (JSONException e)
+
+                        {
+
+                            e.printStackTrace();
+
+                        }
+
                     }
+
                 },
+
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
 
 
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
 
     }
@@ -797,11 +821,12 @@ public class MovieDetailActivity extends AppCompatActivity
     private void requestMovieDetail(final String movieId) {
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=" + OPEN_WEATHER_MAP_API_KEY;
+        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
         final String id = movieId;
 
 
         final String original_url = BASE_PATH + id + api_key;
+        Log.v(LOG_TAG, "ORIGINAL URL >>>>>>>>" + original_url);
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(MovieDetailActivity.this);
@@ -855,7 +880,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -871,7 +896,7 @@ public class MovieDetailActivity extends AppCompatActivity
 
 
         final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=" + OPEN_WEATHER_MAP_API_KEY;
+        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
         final String id = movieId;
         final String vid = "/videos";
         String trailer_url = BASE_PATH + id + vid + api_key;
@@ -935,7 +960,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -966,14 +991,18 @@ public class MovieDetailActivity extends AppCompatActivity
             //first trailer to send at share intent
             if (movieTrailersList.size() != 0) {
                 first_trailer_url = mTitle + ": https://www.youtube.com/watch?v=" + movieTrailersList.get(0).getTrailer_url();
-            } else {
+            }
+            else
+            {
                 //no trailer available, return movie name instead
                 first_trailer_url = mTitle;
             }
 
             mShareActionProvider.setShareIntent(createShareMovieIntent());
-        } else {
-            //Log.e(LOG_TAG, "share action provider is null");
+        }
+        else
+        {
+            Log.e(LOG_TAG, "share action provider is null");
         }
 
         return true;
@@ -994,12 +1023,10 @@ public class MovieDetailActivity extends AppCompatActivity
 
         ArrayList<String> list = new ArrayList<>();
 
-        try {
-            // this calls the json
-            //1. initialization of aactivity.... button is not yet clicked
-            //screen shows, determine if movie ID is included in a list of favorite movies
+        try
+        {
 
-            JSONArray arr = getFavouriteMovies(this);
+            JSONArray arr = utils.getFavouriteMovies(this);
 
             Log.e("xxxxx-add", "called(" + arr.length() + "): " + arr);
 
@@ -1048,6 +1075,5 @@ public class MovieDetailActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 }

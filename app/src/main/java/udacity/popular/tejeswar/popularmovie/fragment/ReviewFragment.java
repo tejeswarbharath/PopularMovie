@@ -32,7 +32,7 @@ import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.view.ReviewRecyclerViewAdapter;
 
 import static udacity.popular.tejeswar.popularmovie.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-import static udacity.popular.tejeswar.popularmovie.utils.*;
+import udacity.popular.tejeswar.popularmovie.utils.*;
 
 /**
  * Created by tejeswar on 10/9/2016.
@@ -119,10 +119,10 @@ public class ReviewFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
+
         View view = inflater.inflate(R.layout.fragment_review_list, container, false);
-
-
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -250,7 +250,7 @@ public class ReviewFragment extends Fragment
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });

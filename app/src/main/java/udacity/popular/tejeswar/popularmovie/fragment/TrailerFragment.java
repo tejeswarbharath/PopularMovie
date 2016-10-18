@@ -38,7 +38,7 @@ import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.view.TrailerRecyclerViewAdapter;
 
 import static udacity.popular.tejeswar.popularmovie.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-import static udacity.popular.tejeswar.popularmovie.utils.*;
+import udacity.popular.tejeswar.popularmovie.utils.*;
 
 /**
  * Created by tejeswar on 10/9/2016.
@@ -47,7 +47,7 @@ public class TrailerFragment extends Fragment
 
 {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_COLUMN_COUNT = "column_count";
 
     private int mColumnCount = 1;
 
@@ -70,17 +70,21 @@ public class TrailerFragment extends Fragment
     private int flagDataType;
     private Intent intent;
 
-    public TrailerFragment() {
+    public TrailerFragment()
+    {
+
     }
 
     @SuppressWarnings("unused")
     public static TrailerFragment newInstance(int columnCount)
     {
+
         TrailerFragment fragment = new TrailerFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
+
     }
 
     @Override
@@ -102,9 +106,12 @@ public class TrailerFragment extends Fragment
 
         }
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
+        {
+
             movieId = savedInstanceState.getString("movieId");
             Log.v("savedInstanceState", "movieid = " + movieId);
+
         }
 
         //Check for any issues
@@ -115,11 +122,18 @@ public class TrailerFragment extends Fragment
             result.getErrorDialog(getActivity(), 0).show();
         }
 
-        if (flagDataType == 0) {
+        if (flagDataType == 0)
+        {
+
             //call trailers from API
             requestMovieTrailer(movieId);
-        } else {
+
+        }
+        else
+        {
+
             Log.v("xxxxxxxx", "trailers not getting from internet");
+
         }
 
     }
@@ -185,9 +199,11 @@ public class TrailerFragment extends Fragment
         mListener = null;
     }
 
-    public interface OnListFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener
+    {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Trailer trailer);
+
     }
 
     private void launchYoutube(String api_key, String video_id) {
@@ -271,7 +287,7 @@ public class TrailerFragment extends Fragment
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
+                            utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });

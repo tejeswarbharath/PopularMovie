@@ -31,7 +31,7 @@ import udacity.popular.tejeswar.popularmovie.parcelable.Review;
 import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.GridSpacingItemDecoration;
 import org.json.JSONObject;
-import static android.support.v4.app.NavUtils.navigateUpFromSameTask;
+import android.support.v4.app.NavUtils;
 
 /**
  * Created by tejeswar on 10/9/2016.
@@ -95,6 +95,7 @@ public class FavouriteListActivity extends AppCompatActivity
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
 
         if (findViewById(R.id.favourite_detail_container) != null)
+
         {
 
             mTwoPane = true;
@@ -106,6 +107,7 @@ public class FavouriteListActivity extends AppCompatActivity
     @Override
 
     protected void onStart()
+
     {
 
         super.onStart();
@@ -115,6 +117,7 @@ public class FavouriteListActivity extends AppCompatActivity
     }
 
     private JSONArray getFavouriteMovies() throws JSONException
+
     {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -251,7 +254,7 @@ public class FavouriteListActivity extends AppCompatActivity
 
         {
 
-            navigateUpFromSameTask(this);
+            NavUtils.navigateUpFromSameTask(this);
 
             return true;
 
@@ -403,13 +406,17 @@ public class FavouriteListActivity extends AppCompatActivity
                                 .putExtra("year", holder.mItem.getDate())
                                 .putExtra("rating", holder.mItem.getVote())
                                 .putExtra("overview", holder.mItem.getOverview())
+                             //   .putExtra("poster",holder.mItem.getImage())
                                 .putExtra("duration", holder.mItem.getDuration());
 
                         context.startActivity(intent);
 
                     }
+
                 }
+
             });
+
         }
 
         @Override

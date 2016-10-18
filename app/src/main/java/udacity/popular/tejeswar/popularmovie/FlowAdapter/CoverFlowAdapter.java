@@ -75,25 +75,31 @@ public class CoverFlowAdapter extends BaseAdapter
         }
         else
         {
+
             viewHolder = (ViewHolder) convertView.getTag();
+
         }
 
-        viewHolder.imgMovieImage.setImageBitmap(decodeBase64Image(position));
+            viewHolder.imgMovieImage.setImageBitmap(decodeBase64Image(position));
 
-        viewHolder.txtMovieName.setText(movieList.get(position).getName());
+            viewHolder.txtMovieName.setText(movieList.get(position).getName());
 
-        convertView.setOnClickListener(onClickListener(position));
+            convertView.setOnClickListener(onClickListener(position));
 
         return convertView;
 
     }
 
-    private Bitmap decodeBase64Image(int position) {
+    private Bitmap decodeBase64Image(int position)
+
+    {
 
         byte[] decodedString = Base64.decode(movieList.get(position).getImage(), Base64.DEFAULT);
+
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         return decodedByte;
+
     }
 
     private View.OnClickListener onClickListener(final int position) {

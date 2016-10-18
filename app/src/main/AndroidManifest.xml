@@ -58,7 +58,13 @@
 
         <activity
 
-            android:name="udacity.popular.tejeswar.popularmovie.activity.FavoriteListActivity"
+            android:name="udacity.popular.tejeswar.popularmovie.FlowAdapter.MainCarousel"
+
+            android:label="@string/action_favorite" />
+
+        <activity
+
+            android:name="udacity.popular.tejeswar.popularmovie.activities.FavouriteListActivity"
 
             android:label="@string/title_favorite_list"
 
@@ -75,13 +81,14 @@
         </activity>
 
         <provider
+
             android:authorities="udacity.popular.tejeswar.popularmovie"
 
             android:name="udacity.popular.tejeswar.popularmovie.database.MovieOperations"
 
             android:exported="false"
 
-            android:syncable="true"/>
+            android:syncable="true" />
 
 
     </application>
