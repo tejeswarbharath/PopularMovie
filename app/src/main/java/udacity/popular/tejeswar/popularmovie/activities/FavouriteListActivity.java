@@ -141,6 +141,8 @@ public class FavouriteListActivity extends AppCompatActivity
 
             JSONArray arr = getFavouriteMovies();
 
+            Log.e("xxxxx-add", "called JSON(" + arr.length() + "): " + arr);
+
             for (int i = 0; i < arr.length(); i++)
 
             {

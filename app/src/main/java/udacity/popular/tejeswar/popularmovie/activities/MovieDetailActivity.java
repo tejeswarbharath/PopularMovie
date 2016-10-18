@@ -1045,16 +1045,23 @@ public class MovieDetailActivity extends AppCompatActivity
             System.out.println("FAVORITES SIZE---------> " + list.size());
 
 
-        } catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
+
             e.printStackTrace();
             Log.e("ERROR", e.getMessage());
+
         }
 
         return list;
+
     }
 
     private void checkMovieID()
+
     {
+
         ArrayList<String> favMovies = getListOfFavMovies();
         if (favMovies.contains(movieId))
         {
@@ -1066,6 +1073,7 @@ public class MovieDetailActivity extends AppCompatActivity
             flagSave = 0;
             fab.setImageResource(R.mipmap.ic_action_unfav);
         }
+
     }
 
 
