@@ -45,10 +45,10 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import udacity.popular.tejeswar.popularmovie.BuildConfig;
 import udacity.popular.tejeswar.popularmovie.R;
+import udacity.popular.tejeswar.popularmovie.Utils;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract;
 import udacity.popular.tejeswar.popularmovie.parcelable.Review;
 import udacity.popular.tejeswar.popularmovie.parcelable.Trailer;
-import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.view.ReviewRecyclerViewAdapter;
 import udacity.popular.tejeswar.popularmovie.view.TrailerRecyclerViewAdapter;
 
@@ -412,7 +412,7 @@ public class MovieDetailFragment extends Fragment
                     public void onErrorResponse(VolleyError error) {
 
                         if (error instanceof NoConnectionError) {
-                            utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -489,7 +489,7 @@ public class MovieDetailFragment extends Fragment
 
                         if (error instanceof NoConnectionError) {
 
-                            utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
 
                         }
                     }
@@ -567,7 +567,7 @@ public class MovieDetailFragment extends Fragment
 
                         {
 
-                            utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(getActivity(), R.string.no_connection, R.string.net).show();
 
                         }
 
@@ -601,7 +601,7 @@ public class MovieDetailFragment extends Fragment
             case 1:
 
                 //set movie poster
-                imgPoster.setImageBitmap(utils.decodeBase64Image(mPoster));
+                imgPoster.setImageBitmap(Utils.decodeBase64Image(mPoster));
                 break;
 
         }

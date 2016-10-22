@@ -1,13 +1,14 @@
 package udacity.popular.tejeswar.popularmovie.activities;
 
-import static android.preference.Preference.*;
+import static android.preference.Preference.OnPreferenceChangeListener;
+
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import udacity.popular.tejeswar.popularmovie.R;
-import android.preference.ListPreference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import udacity.popular.tejeswar.popularmovie.R;
 
 /**
  * Created by tejeswar on 10/9/2016.

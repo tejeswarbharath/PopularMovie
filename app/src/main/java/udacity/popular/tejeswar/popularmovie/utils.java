@@ -23,15 +23,14 @@ import udacity.popular.tejeswar.popularmovie.R;
  * Created by tejeswar on 10/10/2016.
  */
 
-public final class utils
+public final class Utils
 
 {
 
     private static final String FAVOURITES = "favourites";
 
-    private utils()
+    private Utils()
     {
-
 
         throw new AssertionError();
 

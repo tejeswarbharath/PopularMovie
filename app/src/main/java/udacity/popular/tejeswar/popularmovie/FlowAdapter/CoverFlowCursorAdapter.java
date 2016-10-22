@@ -1,4 +1,4 @@
-package udacity.popular.tejeswar.popularmovie.FlowAdapter;
+package udacity.popular.tejeswar.popularmovie.flowadapter;
 
 import android.content.Context;
 import android.database.Cursor;

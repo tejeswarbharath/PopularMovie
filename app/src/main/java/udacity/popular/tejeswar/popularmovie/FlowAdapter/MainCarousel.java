@@ -1,4 +1,4 @@
-package udacity.popular.tejeswar.popularmovie.FlowAdapter;
+package udacity.popular.tejeswar.popularmovie.flowadapter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,7 +22,6 @@ import udacity.popular.tejeswar.popularmovie.parcelable.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,97 +129,9 @@ public class MainCarousel extends AppCompatActivity implements LoaderManager.Loa
 
     private JSONArray getFavouriteMovies() throws JSONException {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String items = preferences.getString("Favourites", "");
+        String items = preferences.getString("favourites", "");
         return new JSONArray(items);
     }
-
-    /**private void displayFavouriteMovies() {
-
-
-        list = new ArrayList<>();
-
-        try {
-            // this calls the json
-            JSONArray arr = getFavouriteMovies();
-
-            for (int i = 0; i < arr.length(); i++)
-            {
-                JSONObject obj = arr.getJSONObject(i);
-                String movie_id = obj.getString("movie_id");
-                String movie_name = obj.getString("movie_name");
-                String movie_image = obj.getString("movie_image");
-                String movie_overview = obj.getString("movie_overview");
-                String movie_date = obj.getString("movie_date");
-                String movie_vote = obj.getString("movie_vote");
-                String movie_duration = obj.getString("movie_duration");
-                JSONArray trailers = obj.getJSONArray("movie_trailers");
-                JSONArray reviews = obj.getJSONArray("movie_reviews");
-
-                //FETCH TRAIlERS
-                if (trailers.length() > 0) {
-                    //if there are trailers available
-                    movieTrailersList = new ArrayList<>();
-                    for (int j = 0; j < trailers.length(); j++) {
-
-                        JSONObject trailer = trailers.getJSONObject(j);
-                        String trailer_num = trailer.getString("trailer_num");
-                        String trailer_url = trailer.getString("trailer_url");
-
-                        Trailer t = new Trailer(trailer_num, trailer_url);
-                        //save trailers in a list
-                        movieTrailersList.add(t);
-
-
-                    }
-                }
-
-                //FETCH REVIEWS
-                if (reviews.length() >= 0) {
-                    //if there are trailers available
-                    movieReviewsList = new ArrayList<>();
-                    for (int j = 0; j < reviews.length(); j++) {
-
-                        JSONObject reviewObj = reviews.getJSONObject(j);
-
-                        String review_author = reviewObj.getString("review_author");
-                        String review_content = reviewObj.getString("review_content");
-
-                        Review rev = new Review(review_author, review_content);
-                        //save reviews in a list
-                        movieReviewsList.add(rev);
-                    }
-                }
-
-                Log.d("xxxxx-add", "adding movie: " + movie_name);
-                System.out.println("TRAILER SIZE---------->" + movieTrailersList.size());
-
-                System.out.println("MOVIE NAME = " + movie_name);
-                for (Trailer t : movieTrailersList
-                        ) {
-                    System.out.println("TRAILER: " + t.getTrailer_url());
-                }
-
-
-                FavouriteMovie fav = new FavouriteMovie( movie_date,movie_duration,movie_id,movie_image,movie_name,movie_overview,movieReviewsList, movieTrailersList,movie_vote);
-
-                list.add(fav);
-
-                System.out.println("Favourite MOVIES SIZE---------> " + list.size());
-
-                //mAdapter = new CoverFlowAdapter(this, list);
-                //mAdapter.setItemList(list);
-
-
-                mAdapter.notifyDataSetChanged();
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ERROR", e.getMessage());
-        }
-
-    }**/
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args)

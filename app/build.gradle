@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "udacity.popular.tejeswar.popularmovie"
-        minSdkVersion 22
+        minSdkVersion 17
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -19,6 +19,11 @@ android {
     }
     buildTypes.each {
         it.buildConfigField 'String', 'OPEN_WEATHER_MAP_API_KEY', '"a3e6990e5c4ec2eb8a31a0d2b1b356a9"'
+    }
+    dexOptions {
+        incremental = true;
+        preDexLibraries = false
+        javaMaxHeapSize "2g"
     }
 }
 

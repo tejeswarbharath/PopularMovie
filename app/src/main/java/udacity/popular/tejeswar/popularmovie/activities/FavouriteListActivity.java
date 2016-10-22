@@ -24,11 +24,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import udacity.popular.tejeswar.popularmovie.R;
+import udacity.popular.tejeswar.popularmovie.Utils;
 import udacity.popular.tejeswar.popularmovie.fragment.MovieDetailFragment;
 import udacity.popular.tejeswar.popularmovie.parcelable.FavouriteMovie;
 import udacity.popular.tejeswar.popularmovie.parcelable.Trailer;
 import udacity.popular.tejeswar.popularmovie.parcelable.Review;
-import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.GridSpacingItemDecoration;
 import org.json.JSONObject;
 import android.support.v4.app.NavUtils;
@@ -83,8 +83,6 @@ public class FavouriteListActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         assert recyclerView != null;
-
-        //displayFavouriteMovies(recyclerView);
 
         int spanCount = 2;
 
@@ -356,7 +354,7 @@ public class FavouriteListActivity extends AppCompatActivity
 
             holder.mTitleView.setText(holder.mItem.getName());
 
-            holder.mImageView.setImageBitmap(utils.decodeBase64Image(holder.mItem.getImage()));
+            holder.mImageView.setImageBitmap(Utils.decodeBase64Image(holder.mItem.getImage()));
 
             holder.mView.setOnClickListener(new View.OnClickListener()
 

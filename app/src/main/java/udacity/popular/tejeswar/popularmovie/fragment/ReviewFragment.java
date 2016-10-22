@@ -28,17 +28,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import udacity.popular.tejeswar.popularmovie.R;
 import udacity.popular.tejeswar.popularmovie.parcelable.Review;
-import udacity.popular.tejeswar.popularmovie.utils;
+import udacity.popular.tejeswar.popularmovie.Utils;
 import udacity.popular.tejeswar.popularmovie.view.ReviewRecyclerViewAdapter;
 
 import static udacity.popular.tejeswar.popularmovie.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-import udacity.popular.tejeswar.popularmovie.utils.*;
 
 /**
  * Created by tejeswar on 10/9/2016.
  */
-public class ReviewFragment extends Fragment
-{
+public class ReviewFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String LOG_TAG = "ReviewFragment";
@@ -58,8 +56,7 @@ public class ReviewFragment extends Fragment
     }
 
     @SuppressWarnings("unused")
-    public static ReviewFragment newInstance(int columnCount)
-    {
+    public static ReviewFragment newInstance(int columnCount) {
         ReviewFragment fragment = new ReviewFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
@@ -68,8 +65,7 @@ public class ReviewFragment extends Fragment
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
@@ -250,7 +246,7 @@ public class ReviewFragment extends Fragment
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });

@@ -40,6 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
             <meta-data
+
                 android:name="android.support.PARENT_ACTIVITY"
 
                 android:value="udacity.popular.tejeswar.popularmovie.activities.MovieActivity" />
@@ -58,7 +59,7 @@
 
         <activity
 
-            android:name="udacity.popular.tejeswar.popularmovie.FlowAdapter.MainCarousel"
+            android:name="udacity.popular.tejeswar.popularmovie.flowadapter.MainCarousel"
 
             android:label="@string/action_favorite" />
 

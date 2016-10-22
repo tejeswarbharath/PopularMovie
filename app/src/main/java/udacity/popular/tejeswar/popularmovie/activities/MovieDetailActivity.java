@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,15 +31,14 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import udacity.popular.tejeswar.popularmovie.R;
+import udacity.popular.tejeswar.popularmovie.Utils;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract.Details;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract.Favourites;
 import udacity.popular.tejeswar.popularmovie.database.MovieDataBaseHandler;
 import udacity.popular.tejeswar.popularmovie.fragment.MovieDetailFragment;
-import udacity.popular.tejeswar.popularmovie.database.MovieContract.Trailers;
 import udacity.popular.tejeswar.popularmovie.parcelable.Review;
 import udacity.popular.tejeswar.popularmovie.parcelable.Trailer;
-import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.BuildConfig;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -178,7 +176,7 @@ public class MovieDetailActivity extends AppCompatActivity
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         try {
-            if (utils.getFavouriteMovies(this) != null)
+            if (Utils.getFavouriteMovies(this) != null)
             {
                 checkMovieID();
             }
@@ -225,7 +223,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         try
                         {
 
-                            utils.removeFromFavourites(MovieDetailActivity.this, movieId, view);
+                            Utils.removeFromFavourites(MovieDetailActivity.this, movieId, view);
                             deleteFavouriteinDB(Long.parseLong(movieId));
 
                         } catch (JSONException e) {
@@ -556,7 +554,7 @@ public class MovieDetailActivity extends AppCompatActivity
             int size = saveTrailers().length();
             System.out.println("FAVORITE TRAILER SIZE " + size);
 
-            utils.saveFavouriteMovies(this, item, view);
+            Utils.saveFavouriteMovies(this, item, view);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -808,7 +806,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -817,78 +815,6 @@ public class MovieDetailActivity extends AppCompatActivity
         queue.add(stringRequest);
 
     }
-
-/**    private void requestMovieDetail(final String movieId) {
-
-        final String BASE_PATH = "http://api.themoviedb.org/3/movie/";
-        final String api_key = "?api_key=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-        final String id = movieId;
-
-
-        final String original_url = BASE_PATH + id + api_key;
-        Log.v(LOG_TAG, "ORIGINAL URL >>>>>>>>" + original_url);
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(MovieDetailActivity.this);
-
-
-        //generate url for fetching movie poster
-        //1.base path
-        final String IMAGE_BASE_PATH = "http://image.tmdb.org/t/p/";
-        //2. Then you will need a ‘size’, which will be one of the following: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
-        final String image_size = "w500";
-        //3. And finally the poster path returned by the query : movie_image
-
-
-        // Formulate the request and handle the response.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, original_url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Do something with the response
-                        System.out.println(response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            mTitle = jsonObject.getString("title");
-                            mYear = jsonObject.getString("release_date").substring(0, 4);
-                            mDuration = jsonObject.getString("runtime") + "min";
-                            mRating = jsonObject.getString("vote_average") + "/10";
-                            vote_average = Float.parseFloat(jsonObject.getString("vote_average"));
-                            mOverview = jsonObject.getString("overview");
-                            mPoster = IMAGE_BASE_PATH + image_size + jsonObject.getString("poster_path");
-
-
-                            Log.v("TITLE:>>>>>>>>>>>> ", mTitle);
-                            Log.v("mYear:>>>>>>>>>>>> ", mYear);
-                            Log.v("mDuration:>>>>>>>>>>> ", mDuration);
-                            Log.v("mRating:>>>>>>>>>>>>>> ", mRating);
-                            Log.v("mOverview:>>>>>>>>>>>> ", mOverview);
-                            Log.v("mPoster:>>>>>>>>>>>>>> ", mPoster);
-
-                            updateTableDetail(Long.parseLong(id), mTitle, mYear, mDuration, mRating, mOverview, mPoster);
-
-                            loadImageBitmap(mPoster);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //other catches
-                        if (error instanceof NoConnectionError) {
-                            //show dialog no net connection
-                            utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
-                        }
-                    }
-                });
-
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }**/
 
     private void requestMovieTrailer(final String movieId) {
         //http://api.themoviedb.org/3/movie/246655/videos?api_key=6d369d4e0676612d2d046b7f3e8424bd
@@ -960,7 +886,7 @@ public class MovieDetailActivity extends AppCompatActivity
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(MovieDetailActivity.this, R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
@@ -1026,7 +952,7 @@ public class MovieDetailActivity extends AppCompatActivity
         try
         {
 
-            JSONArray arr = utils.getFavouriteMovies(this);
+            JSONArray arr = Utils.getFavouriteMovies(this);
 
             Log.e("xxxxx-add", "called(" + arr.length() + "): " + arr);
 

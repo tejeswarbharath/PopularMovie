@@ -46,12 +46,12 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.squareup.picasso.Picasso;
 import udacity.popular.tejeswar.popularmovie.GridSpacingItemDecoration;
 import udacity.popular.tejeswar.popularmovie.R;
+import udacity.popular.tejeswar.popularmovie.Utils;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract;
 import udacity.popular.tejeswar.popularmovie.database.MovieContract.Details;
 import udacity.popular.tejeswar.popularmovie.database.MovieDataBaseHandler;
 import udacity.popular.tejeswar.popularmovie.fragment.MovieDetailFragment;
 import udacity.popular.tejeswar.popularmovie.parcelable.MovieImage;
-import udacity.popular.tejeswar.popularmovie.utils;
 import udacity.popular.tejeswar.popularmovie.BuildConfig;
 
 /**
@@ -328,7 +328,7 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
                         if (error instanceof NoConnectionError)
                         {
 
-                            utils.showSuccessDialog(MovieActivity.this, R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(MovieActivity.this, R.string.no_connection, R.string.net).show();
 
                         }
 
@@ -392,36 +392,20 @@ public class MovieActivity extends AppCompatActivity implements LoaderManager.Lo
         {
 
             try {
-                if (utils.getFavouriteMovies(this) != null)
+                if (Utils.getFavouriteMovies(this) != null)
                 {
                     Intent intent = new Intent(this, FavouriteListActivity.class);
                     startActivity(intent);
                 }
                 else
                 {
-                    utils.showSuccessDialog(this, R.string.action_favorite, R.string.no_favorites).show();
+                    Utils.showSuccessDialog(this, R.string.action_favorite, R.string.no_favorites).show();
                 }
             }
             catch (JSONException e)
             {
                 e.printStackTrace();
             }
-        }
-
-        if (id == R.id.action_favorite)
-        {
-
-            Cursor c = this.getContentResolver().query(MovieContract.Favourites.CONTENT_URI,
-                            new String[]{MovieContract.Favourites._ID},
-                            null,
-                            null,
-                            null);
-
-            if (c.getCount() == 0)
-            {
-                utils.showSuccessDialog(this, R.string.action_favorite, R.string.no_favorites).show();
-            }
-
         }
 
         return super.onOptionsItemSelected(item);

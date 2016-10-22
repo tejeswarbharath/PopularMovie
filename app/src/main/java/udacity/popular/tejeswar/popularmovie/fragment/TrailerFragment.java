@@ -34,11 +34,10 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import udacity.popular.tejeswar.popularmovie.R;
 import udacity.popular.tejeswar.popularmovie.parcelable.Trailer;
-import udacity.popular.tejeswar.popularmovie.utils;
+import udacity.popular.tejeswar.popularmovie.Utils;
 import udacity.popular.tejeswar.popularmovie.view.TrailerRecyclerViewAdapter;
 
 import static udacity.popular.tejeswar.popularmovie.BuildConfig.OPEN_WEATHER_MAP_API_KEY;
-import udacity.popular.tejeswar.popularmovie.utils.*;
 
 /**
  * Created by tejeswar on 10/9/2016.
@@ -287,7 +286,7 @@ public class TrailerFragment extends Fragment
                         //other catches
                         if (error instanceof NoConnectionError) {
                             //show dialog no net connection
-                            utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
+                            Utils.showSuccessDialog(getContext(), R.string.no_connection, R.string.net).show();
                         }
                     }
                 });
